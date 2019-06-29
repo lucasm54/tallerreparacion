@@ -5,12 +5,14 @@
  */
 package Clases;
 
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -101,7 +103,39 @@ public class AparatoData {
         }
     }
         
+    public List<> mostrarAparatosXduenio(int idDuenio){
+        
+        ArrayList<Aparato> aparatos = new ArrayList<Aparato>();
+        
+        try{
+            String sql = "SELECT * FROM aparato WHERE id_cliente = ?;";
+            PreparedStatement ps = conexion.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1,idDuenio);
+            
+            ResultSet rs = ps.executeQuery();
+            Aparato aparato = null;
+            while(rs.next()){
+                aparato.setId_aparato(rs.getInt("id_aparato"));
+                aparato.setNro_serie(rs.getString("nro_serie"));
+                aparato.setTipo(rs.getString("tipo"));
+                
+                Cliente c = buscarCliente(rs.getInt("id_cliente"));
+                
+                aparato.setDueño(c);
+                
+                aparato.setFechIngreso(Date.valueOf(rs.getDate("fechIngreso")));
+                aparato.setFechEgreso(Date.valueOf(rs.getDate("fechEgreso")));
+                aparatos.add(aparato);
+            }
+            
+        }catch(SQLException ex){
+            System.out.println("No se puede encontrar aparatos de este duenio");
+        }
+        return aparatos;
     }
+    
+    }
+    
     
     
 
