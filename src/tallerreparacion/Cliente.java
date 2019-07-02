@@ -11,7 +11,7 @@ package tallerreparacion;
  */
 public class Cliente {
     private int idCliente;
-    private String nombreCliente;
+    private String nombre_Cliente;
     private String dni;
     private String domicilio;
     private String celular;
@@ -21,14 +21,14 @@ public class Cliente {
 
     public Cliente(int idCliente, String nombreCliente, String dni, String domicilio, String celular) {
         this.idCliente = idCliente;
-        this.nombreCliente = nombreCliente;
+        this.nombre_Cliente = nombreCliente;
         this.dni = dni;
         this.domicilio = domicilio;
         this.celular = celular;
     }
 
     public Cliente(String nombreCliente, String dni, String domicilio, String celular) {
-        this.nombreCliente = nombreCliente;
+        this.nombre_Cliente = nombreCliente;
         this.dni = dni;
         this.domicilio = domicilio;
         this.celular = celular;
@@ -47,12 +47,12 @@ public class Cliente {
         this.idCliente = idCliente;
     }
 
-    public String getNombreCliente() {
-        return nombreCliente;
+    public String getNombre_Cliente() {
+        return nombre_Cliente;
     }
 
     public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
+        this.nombre_Cliente = nombreCliente;
     }
 
     public String getDni() {

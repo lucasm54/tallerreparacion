@@ -35,7 +35,7 @@ public class ClienteData {
             PreparedStatement ps;
             ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             
-            ps.setString(1, cliente.getNombreCliente());
+            ps.setString(1, cliente.getNombre_Cliente());
             ps.setString(2, cliente.getDni());
             ps.setString(3, cliente.getDomicilio());
             ps.setString(4, cliente.getCelular());
@@ -83,7 +83,7 @@ public class ClienteData {
             PreparedStatement ps;
             ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             
-            ps.setString(1,cliente.getNombreCliente());
+            ps.setString(1,cliente.getNombre_Cliente());
             ps.setString(2,cliente.getDni());
             ps.setString(3,cliente.getDomicilio());
             ps.setString(4,cliente.getCelular());

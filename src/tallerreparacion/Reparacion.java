@@ -12,7 +12,7 @@ import java.time.LocalDate;
  * @author Lucas
  */
 public class Reparacion {
-    private int idReparacion;
+    private int id_Reparacion;
     private Aparato aparato;
     private Servicio servicio;
     private LocalDate fechReparacion;
@@ -20,8 +20,8 @@ public class Reparacion {
     
     ///constructor
 
-    public Reparacion(int idReparacion, Aparato aparato, Servicio servicio, LocalDate fechReparacion, String estado) {
-        this.idReparacion = idReparacion;
+    public Reparacion(int id_Reparacion, Aparato aparato, Servicio servicio, LocalDate fechReparacion, String estado) {
+        this.id_Reparacion = id_Reparacion;
         this.aparato = aparato;
         this.servicio = servicio;
         this.fechReparacion = fechReparacion;
@@ -38,12 +38,12 @@ public class Reparacion {
     public Reparacion() {
     }
 
-    public int getIdReparacion() {
-        return idReparacion;
+    public int getId_Reparacion() {
+        return id_Reparacion;
     }
 
-    public void setIdReparacion(int idReparacion) {
-        this.idReparacion = idReparacion;
+    public void setId_Reparacion(int idReparacion) {
+        this.id_Reparacion = idReparacion;
     }
 
     public Aparato getAparato() {
