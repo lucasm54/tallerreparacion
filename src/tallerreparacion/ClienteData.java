@@ -28,6 +28,9 @@ public class ClienteData {
             JOptionPane.showMessageDialog(null,"No se encuentra la conexion");
         }
     }
+
+    public ClienteData() {
+    }
     
     public void guardarCliente (Cliente cliente){
         try {
@@ -98,43 +101,31 @@ public class ClienteData {
             System.out.println("Error al actualizar cliente" + ex.getMessage());
         }
     }
-         public Cliente buscarCliente(int idCliente){
-    Cliente cliente=null;
-    try{
-            
-            String sql = "SELECT * FROM cliente WHERE id_cliente =?;";
-
-         PreparedStatement ps;
-         ps= conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-         
-         ps.setInt(1, idCliente);
-            
-            
-            ResultSet resultSet=ps.executeQuery();
-            
-            while(resultSet.next()){
-                cliente = new Cliente();
-                cliente.setIdCliente(resultSet.getInt("id_Cliente"));
-                cliente.setNombreCliente(resultSet.getString("nombre_cliente"));
-                cliente.setDni(resultSet.getString("dni"));
-                cliente.setDomicilio(resultSet.getString("domicilio"));               
-                cliente.setCelular(resultSet.getString("celular"));
+     public Cliente buscarCliente(int idcliente){
+            Cliente c = null;
+            try{
+                String sql = "SELECT * FROM cliente WHERE id_cliente = ?;";
+                PreparedStatement ps;
+                ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+                
+                ps.setInt(1, idcliente);
+                
+                ResultSet rs = ps.executeQuery();
                 
                 
+                if(rs.next()){
+                    c = new Cliente();
+                    c.setIdCliente(rs.getInt(rs.getInt("id_cliente")));
+                    c.setNombreCliente(rs.getString("nombre_cliente"));
+                    c.setDni(rs.getString(rs.getString("dni")));
+                    c.setDomicilio(rs.getString(rs.getString("domicilio")));
+                    c.setCelular(rs.getString(rs.getString("celular")));
+                }
+                ps.close();
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error al actualizar el cliente");
             }
-        
-            
-            
-            
-            
-    
-        } catch (SQLException ex) {
-            System.out.println("Error al obtener un cliente: " + ex.getMessage());
-        }
-         
-        return cliente;
-    
-    
-         }
+            return c;
+        }   
 }
 

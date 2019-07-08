@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,7 +49,7 @@ public class ServicioData {
             ResultSet rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
-                se.setCodigo(rs.getNString(1));
+                se.setId_servicio(rs.getInt(1));
             }
             else {
                 
@@ -64,7 +65,7 @@ public class ServicioData {
     {
         try
         {
-            String sql = "UPDATE servicio SET descripcion=?,costo=? WHERE codigo=?";
+            String sql = "UPDATE servicio SET codigo = ? , descripcion = ? , costo = ? WHERE id_servicio = ?";
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,servicio.getCodigo());
             ps.setString(2,servicio.getDescripcion());
@@ -72,18 +73,19 @@ public class ServicioData {
             ps.executeUpdate();
             
             ps.close();
+            
         }catch(SQLException ex)
         {
             System.out.println("ERROR NO SE PUDO INGRESAR");
         }
     }
-    public void borrarServicio(String codigo) throws SQLException
+    public void borrarServicio(int id) throws SQLException
     {
         try
         {
-            String sql = "DELETE FROM servicio WHERE codigo=?";
+            String sql = "DELETE FROM servicio WHERE id_servicio = ?";
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1,codigo);
+            ps.setInt(1,id);
             ps.executeUpdate();
             ps.close();
         }catch(SQLException ex)
@@ -91,7 +93,32 @@ public class ServicioData {
             System.out.print("ERROR AL INSERTAR CODIGO"+ex.getMessage());
         }
     }
-    
+    //AGREGE EL BUSCAR SERVICIO TAMBIEN
+    public Servicio buscarServicio(int id){
+            Servicio s = null;
+            try{
+                String sql = "SELECT * FROM servicio WHERE id_servicio = ?;";
+                PreparedStatement ps;
+                ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+                
+                ps.setInt(1, id);
+                
+                ResultSet rs = ps.executeQuery();
+                
+                
+                if(rs.next()){
+                    s = new Servicio();
+                    s.setId_servicio(rs.getInt(rs.getInt("id_servicio")));
+                    s.setCodigo(rs.getString("codigo"));
+                    s.setDescripcion(rs.getString("descripcion"));
+                    s.setCosto(rs.getDouble("costo"));
+                }
+                ps.close();
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error al buscar el servicio");
+            }
+            return s;
+        }   
 
     }
     

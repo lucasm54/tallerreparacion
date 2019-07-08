@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package tallerreparacion;
-import tallerreparacion.Aparato;
-import tallerreparacion.Conexion;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -57,7 +55,7 @@ public class AparatoData {
             ps.close();
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Nose puede insertar un aparato");
+            JOptionPane.showMessageDialog(null, "No se puede insertar un aparato");
         }
     }
     
@@ -103,7 +101,59 @@ public class AparatoData {
             System.out.println("Error al actualizar aparato" + ex.getMessage());
         }
     }
-        
+    public Aparato buscarAparato(int id){
+        Aparato a = null;
+        try{
+            String sql = "SELECT * FROM aparato WHERE id_aparato = ?;";
+            PreparedStatement ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                a = new Aparato();
+                a.setId_aparato(rs.getInt("id_aparato"));
+                a.setNro_serie(rs.getString("nro_serie"));
+                a.setTipo(rs.getString("tipo"));
+                ClienteData cd = new ClienteData();
+                Cliente c = cd.buscarCliente(rs.getInt("id_cliente")); 
+                a.setDueño(c);
+                a.setFechIngreso(rs.getDate("fechIngreso").toLocalDate());
+                a.setFechEgreso(rs.getDate("fechEgreso").toLocalDate());
+                
+            }
+            ps.close();
+        }catch(SQLException ex){
+            
+        }
+        return a;
+    }
+    
+    public Aparato buscarAparatoXFecha(String fecha){
+        Aparato a = null;
+        try{
+            String sql = "SELECT * FROM aparato WHERE fechIngreso = ?;";
+            PreparedStatement ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setDate(1,Date.valueOf(fecha));
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                a = new Aparato();
+                a.setId_aparato(rs.getInt("id_aparato"));
+                a.setNro_serie(rs.getString("nro_serie"));
+                a.setTipo(rs.getString("tipo"));
+                ClienteData cd = new ClienteData();
+                Cliente c = cd.buscarCliente(rs.getInt("id_cliente")); 
+                a.setDueño(c);
+                a.setFechIngreso(rs.getDate("fechIngreso").toLocalDate());
+                a.setFechEgreso(rs.getDate("fechEgreso").toLocalDate());
+                
+            }
+            ps.close();
+        }catch(SQLException ex){
+            
+        }
+        return a;
+    }
     public List<Aparato> mostrarAparatosXduenio(int idDuenio){
         
         List<Aparato> aparatos = new ArrayList<Aparato>();
@@ -123,8 +173,8 @@ public class AparatoData {
                 aparato.setTipo(rs.getString("tipo"));
                 aparato.setFechIngreso(rs.getDate("fechIngreso").toLocalDate());
                 aparato.setFechEgreso(rs.getDate("fechEgreso").toLocalDate());
-                
-                Cliente c = buscarCliente(rs.getInt("id_cliente"));
+                ClienteData cd = new ClienteData(con);
+                Cliente c = cd.buscarCliente(rs.getInt("id_cliente"));
                 
                 aparato.setDueño(c);
                 
