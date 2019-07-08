@@ -27,17 +27,176 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu3 = new javax.swing.JMenu();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuBar4 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuBar5 = new javax.swing.JMenuBar();
+        jMenu10 = new javax.swing.JMenu();
+        jMenu11 = new javax.swing.JMenu();
+        jMenuBar6 = new javax.swing.JMenuBar();
+        jMenu12 = new javax.swing.JMenu();
+        jMenu13 = new javax.swing.JMenu();
+        jMenuBar7 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu14 = new javax.swing.JMenu();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jMenu17 = new javax.swing.JMenu();
+        jMenuBar9 = new javax.swing.JMenuBar();
+        jMenu18 = new javax.swing.JMenu();
+        jMenu19 = new javax.swing.JMenu();
+        jMenu22 = new javax.swing.JMenu();
+        jMenu25 = new javax.swing.JMenu();
+        jMenu27 = new javax.swing.JMenu();
+        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+        jMenu31 = new javax.swing.JMenu();
+        Escritorio = new javax.swing.JDesktopPane();
+        jMenuBar8 = new javax.swing.JMenuBar();
+        jMenu15 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu16 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu28 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu26 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu20 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
+
+        jMenu3.setText("jMenu3");
+
+        jMenu4.setText("File");
+        jMenuBar2.add(jMenu4);
+
+        jMenu5.setText("Edit");
+        jMenuBar2.add(jMenu5);
+
+        jMenu6.setText("File");
+        jMenuBar3.add(jMenu6);
+
+        jMenu7.setText("Edit");
+        jMenuBar3.add(jMenu7);
+
+        jMenu2.setText("File");
+        jMenuBar4.add(jMenu2);
+
+        jMenu8.setText("Edit");
+        jMenuBar4.add(jMenu8);
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
+
+        jMenu9.setText("jMenu9");
+
+        jMenu10.setText("File");
+        jMenuBar5.add(jMenu10);
+
+        jMenu11.setText("Edit");
+        jMenuBar5.add(jMenu11);
+
+        jMenu12.setText("File");
+        jMenuBar6.add(jMenu12);
+
+        jMenu13.setText("Edit");
+        jMenuBar6.add(jMenu13);
+
+        jMenu1.setText("File");
+        jMenuBar7.add(jMenu1);
+
+        jMenu14.setText("Edit");
+        jMenuBar7.add(jMenu14);
+
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
+
+        jMenu17.setText("jMenu17");
+
+        jMenu18.setText("File");
+        jMenuBar9.add(jMenu18);
+
+        jMenu19.setText("Edit");
+        jMenuBar9.add(jMenu19);
+
+        jMenu22.setText("jMenu22");
+
+        jMenu25.setText("jMenu25");
+
+        jMenu27.setText("jMenu27");
+
+        jCheckBoxMenuItem2.setSelected(true);
+        jCheckBoxMenuItem2.setText("jCheckBoxMenuItem2");
+
+        jMenu31.setText("jMenu31");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
+        Escritorio.setLayout(EscritorioLayout);
+        EscritorioLayout.setHorizontalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        EscritorioLayout.setVerticalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 316, Short.MAX_VALUE)
+        );
+
+        jMenu15.setText("Archivo");
+
+        jMenuItem3.setText("Salir");
+        jMenu15.add(jMenuItem3);
+
+        jMenuBar8.add(jMenu15);
+
+        jMenu16.setText("Cliente");
+
+        jMenuItem4.setText("Formulario Cliente");
+        jMenu16.add(jMenuItem4);
+
+        jMenuBar8.add(jMenu16);
+
+        jMenu28.setText("Servicio");
+
+        jMenuItem5.setText("Formulario Servicio");
+        jMenu28.add(jMenuItem5);
+
+        jMenuBar8.add(jMenu28);
+
+        jMenu26.setText("Reparacion");
+
+        jMenuItem6.setText("Forulario Reparacion");
+        jMenu26.add(jMenuItem6);
+
+        jMenuBar8.add(jMenu26);
+
+        jMenu20.setText("Aparato");
+
+        jMenuItem7.setText("Formulario Aparato");
+        jMenu20.add(jMenuItem7);
+
+        jMenuBar8.add(jMenu20);
+
+        setJMenuBar(jMenuBar8);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(Escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(Escritorio)
         );
 
         pack();
@@ -79,5 +238,49 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane Escritorio;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
+    private javax.swing.JMenu jMenu11;
+    private javax.swing.JMenu jMenu12;
+    private javax.swing.JMenu jMenu13;
+    private javax.swing.JMenu jMenu14;
+    private javax.swing.JMenu jMenu15;
+    private javax.swing.JMenu jMenu16;
+    private javax.swing.JMenu jMenu17;
+    private javax.swing.JMenu jMenu18;
+    private javax.swing.JMenu jMenu19;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu20;
+    private javax.swing.JMenu jMenu22;
+    private javax.swing.JMenu jMenu25;
+    private javax.swing.JMenu jMenu26;
+    private javax.swing.JMenu jMenu27;
+    private javax.swing.JMenu jMenu28;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu31;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuBar jMenuBar4;
+    private javax.swing.JMenuBar jMenuBar5;
+    private javax.swing.JMenuBar jMenuBar6;
+    private javax.swing.JMenuBar jMenuBar7;
+    private javax.swing.JMenuBar jMenuBar8;
+    private javax.swing.JMenuBar jMenuBar9;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     // End of variables declaration//GEN-END:variables
 }

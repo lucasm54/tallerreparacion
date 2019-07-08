@@ -29,7 +29,7 @@ public class ClienteData {
         }
     }
     
-    public void guardarAparato(Cliente cliente){
+    public void guardarCliente (Cliente cliente){
         try {
             String sql = "INSERT INTO aparato(nombre_cliente , dni , domicilio , celular) VALUES(? ,? ,? ,?);";
             PreparedStatement ps;
@@ -98,6 +98,43 @@ public class ClienteData {
             System.out.println("Error al actualizar cliente" + ex.getMessage());
         }
     }
+         public Cliente buscarCliente(int idCliente){
+    Cliente cliente=null;
+    try{
+            
+            String sql = "SELECT * FROM cliente WHERE id_cliente =?;";
+
+         PreparedStatement ps;
+         ps= conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+         
+         ps.setInt(1, idCliente);
+            
+            
+            ResultSet resultSet=ps.executeQuery();
+            
+            while(resultSet.next()){
+                cliente = new Cliente();
+                cliente.setIdCliente(resultSet.getInt("id_Cliente"));
+                cliente.setNombreCliente(resultSet.getString("nombre_cliente"));
+                cliente.setDni(resultSet.getString("dni"));
+                cliente.setDomicilio(resultSet.getString("domicilio"));               
+                cliente.setCelular(resultSet.getString("celular"));
+                
+                
+            }
         
+            
+            
+            
+            
+    
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener un cliente: " + ex.getMessage());
+        }
+         
+        return cliente;
+    
+    
+         }
 }
 

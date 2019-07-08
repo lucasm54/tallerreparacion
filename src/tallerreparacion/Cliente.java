@@ -78,12 +78,6 @@ public class Cliente {
     public void setCelular(String celular) {
         this.celular = celular;
     }
-    
-    
          
-            
-    
-    
-    
-    
+          
 }

@@ -10,7 +10,7 @@ package tallerreparacion;
  * @author Emiliano
  */
 class Servicio {
-    
+ private int idServicio; 
  private String codigo;
  private String descripcion;
  private double costo;
