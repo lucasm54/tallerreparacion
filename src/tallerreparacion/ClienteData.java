@@ -20,7 +20,7 @@ public class ClienteData {
     
     private Connection conexion;
 
-    public CienteData(Conexion con) {
+    public ClienteData(Conexion con) {
         try{
             conexion = con.getConnection();
             

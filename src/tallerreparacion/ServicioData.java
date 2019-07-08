@@ -23,7 +23,7 @@ public class ServicioData {
     {
         try
         {
-            con = conexion.getConexion();
+            con = conexion.getConnection();
         
         }
         catch(SQLException ex)

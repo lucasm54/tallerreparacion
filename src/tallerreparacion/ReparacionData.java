@@ -26,7 +26,7 @@ public class ReparacionData {
     {
         try
         {
-            con = conexion.getConexion();
+            con = conexion.getConnection();
         }
         catch(SQLException ex)
         {
