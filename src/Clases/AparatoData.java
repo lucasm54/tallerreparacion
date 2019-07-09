@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tallerreparacion;
+package Clases;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -34,7 +34,7 @@ public class AparatoData {
     
     public void guardarAparato(Aparato aparato){
         try {
-            String sql = "INSERT INTO aparato(nro_serie , tipo , dueño , fechIngreso , fechEgreso) VALUES(? ,? ,? ,? ,?);";
+            String sql = "INSERT INTO aparato(nro_serie , tipo , id_cliente , fechIngreso , fechEgreso) VALUES(? ,? ,? ,? ,?);";
             PreparedStatement ps;
             ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             
@@ -50,7 +50,7 @@ public class AparatoData {
                 aparato.setId_aparato(rs.getInt(1));
             }
             else{
-                JOptionPane.showMessageDialog(null, "Nose puedo obtener el id");
+                System.out.println( "Nose puedo obtener el id");
             }
             ps.close();
             
@@ -91,7 +91,7 @@ public class AparatoData {
             ps.setInt(3,aparato.getDueño().getIdCliente());
             ps.setDate(4,Date.valueOf(aparato.getFechIngreso()));
             ps.setDate(5,Date.valueOf(aparato.getFechEgreso()));
-            
+            ps.setInt(6, aparato.getId_aparato());
             
             ps.executeUpdate();
             
@@ -102,19 +102,18 @@ public class AparatoData {
         }
     }
     public Aparato buscarAparato(int id){
-        Aparato a = null;
+        Aparato a = new Aparato();
         try{
             String sql = "SELECT * FROM aparato WHERE id_aparato = ?;";
             PreparedStatement ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             
-            if(rs.next()){
-                a = new Aparato();
+            while(rs.next()){
                 a.setId_aparato(rs.getInt("id_aparato"));
                 a.setNro_serie(rs.getString("nro_serie"));
                 a.setTipo(rs.getString("tipo"));
-                ClienteData cd = new ClienteData();
+                ClienteData cd = new ClienteData(con);
                 Cliente c = cd.buscarCliente(rs.getInt("id_cliente")); 
                 a.setDueño(c);
                 a.setFechIngreso(rs.getDate("fechIngreso").toLocalDate());
@@ -123,7 +122,7 @@ public class AparatoData {
             }
             ps.close();
         }catch(SQLException ex){
-            
+            System.out.println("Buscar aparato no anda");
         }
         return a;
     }

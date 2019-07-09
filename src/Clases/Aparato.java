@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tallerreparacion;
+package Clases;
 
 import java.time.LocalDate;
 
@@ -28,6 +28,11 @@ public class Aparato {
         this.dueño = dueño;
         this.fechIngreso = fechIngreso;
         this.fechEgreso = fechEgreso;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
     }
 
     public Aparato(int id_aparato, String nro_serie, String tipo, Cliente dueño, LocalDate fechIngreso, LocalDate fechEgreso) {

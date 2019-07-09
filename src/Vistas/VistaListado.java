@@ -9,12 +9,12 @@ package Vistas;
  *
  * @author Franco
  */
-public class VistaServicio extends javax.swing.JInternalFrame {
+public class VistaListado extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form VistaServicio
+     * Creates new form VistaListado
      */
-    public VistaServicio() {
+    public VistaListado() {
         initComponents();
     }
 
@@ -28,9 +28,13 @@ public class VistaServicio extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        jLabel7.setText("SERVICIOS");
+        jLabel7.setText("PENDIENTES");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jLabel8.setText("REPARADOS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -38,7 +42,9 @@ public class VistaServicio extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(146, 146, 146)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(128, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -46,7 +52,9 @@ public class VistaServicio extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
-                .addContainerGap(245, Short.MAX_VALUE))
+                .addGap(83, 83, 83)
+                .addComponent(jLabel8)
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         pack();
@@ -55,5 +63,6 @@ public class VistaServicio extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     // End of variables declaration//GEN-END:variables
 }

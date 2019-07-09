@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tallerreparacion;
+package Clases;
 
 /**
  *
@@ -15,6 +15,10 @@ public class Cliente {
     private String dni;
     private String domicilio;
     private String celular;
+
+    public String toString() {
+        return idCliente + " " + nombre_Cliente; //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     ///contructor

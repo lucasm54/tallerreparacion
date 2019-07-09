@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tallerreparacion;
+package Clases;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,11 +21,11 @@ import javax.swing.JOptionPane;
 public class ClienteData {
     
     private Connection conexion;
-
+    private Conexion con;
     public ClienteData(Conexion con) {
         try{
+            this.con = con;
             conexion = con.getConnection();
-            
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null,"No se encuentra la conexion");
         }
@@ -34,7 +36,7 @@ public class ClienteData {
     
     public void guardarCliente (Cliente cliente){
         try {
-            String sql = "INSERT INTO aparato(nombre_cliente , dni , domicilio , celular) VALUES(? ,? ,? ,?);";
+            String sql = "INSERT INTO cliente(nombre_cliente , dni , domicilio , celular) VALUES(? ,? ,? ,?);";
             PreparedStatement ps;
             ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             
@@ -62,7 +64,7 @@ public class ClienteData {
     public void borrarCliente(int idCliente){
             try{
                 //CONSULTA DE SQL
-                String sql = "DELETE FROM aparato WHERE id_cliente=?";
+                String sql = "DELETE FROM cliente WHERE id_cliente=?";
                 //RETORNA EL ID AUTOINCREMENTAL
                 PreparedStatement ps;
                 ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -78,10 +80,37 @@ public class ClienteData {
                 System.out.println("Error al eliminar cliente" + ex.getMessage());
             }
     }
-    
+    public List<Cliente> listarClientes(){
+        List<Cliente> lista = new ArrayList<Cliente>();
+        try{
+            String sql = "SELECT * FROM cliente;";
+            
+            PreparedStatement ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            
+            ResultSet result = ps.executeQuery();
+            
+            Cliente cliente;
+            
+            while(result.next()){
+                cliente = new Cliente();
+                cliente.setIdCliente(result.getInt("id_cliente"));
+                cliente.setNombreCliente(result.getString("nombre_cliente"));
+                cliente.setDni(result.getString("dni"));
+                cliente.setDomicilio(result.getString("domicilio"));
+                cliente.setCelular(result.getString("celular"));
+                lista.add(cliente);
+                
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al querer mostrar clientes " + ex.getMessage());
+        }
+        
+        return lista; 
+    }
     public void actualizarCliente(Cliente cliente){
         try{
-            String sql = "UPDATE aparato SET nombre_cliente = ?, dni= ? , domicilio = ? ,celular = ? WHERE id_cliente = ?;";
+            String sql = "UPDATE cliente SET nombre_cliente = ?, dni= ? , domicilio = ? ,celular = ? WHERE id_cliente = ?;";
             
             PreparedStatement ps;
             ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -102,7 +131,7 @@ public class ClienteData {
         }
     }
      public Cliente buscarCliente(int idcliente){
-            Cliente c = null;
+            Cliente c = new Cliente();
             try{
                 String sql = "SELECT * FROM cliente WHERE id_cliente = ?;";
                 PreparedStatement ps;
@@ -113,8 +142,7 @@ public class ClienteData {
                 ResultSet rs = ps.executeQuery();
                 
                 
-                if(rs.next()){
-                    c = new Cliente();
+                while(rs.next()){
                     c.setIdCliente(rs.getInt(rs.getInt("id_cliente")));
                     c.setNombreCliente(rs.getString("nombre_cliente"));
                     c.setDni(rs.getString(rs.getString("dni")));
@@ -123,7 +151,7 @@ public class ClienteData {
                 }
                 ps.close();
             }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null,"Error al actualizar el cliente");
+                JOptionPane.showMessageDialog(null,"Error al buscar un cliente");
             }
             return c;
         }   

@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tallerreparacion;
+package Clases;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,7 +34,34 @@ public class ServicioData {
             System.out.println("ERROR AL CONECTAR"+ex.getMessage());
         }
     }
-    
+//    public List<Servicio> listarServicios(){
+//        List<Servicio> lista = new ArrayList<Servicio>();
+//        try{
+//            String sql = "SELECT * FROM cliente;";
+//            
+//            PreparedStatement ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+//            
+//            ResultSet result = ps.executeQuery();
+//            
+//            Cliente cliente;
+//            
+//            while(result.next()){
+//                cliente = new Cliente();
+//                cliente.setIdCliente(result.getInt("id_cliente"));
+//                cliente.setNombreCliente(result.getString("nombre_cliente"));
+//                cliente.setDni(result.getString("dni"));
+//                cliente.setDomicilio(result.getString("domicilio"));
+//                cliente.setCelular(result.getString("celular"));
+//                lista.add(cliente);
+//                
+//            }
+//            ps.close();
+//        } catch (SQLException ex) {
+//            System.out.println("Error al querer mostrar clientes " + ex.getMessage());
+//        }
+//        
+//        return lista; 
+//    }
     public void guardarServicio(Servicio se)
     {
         
