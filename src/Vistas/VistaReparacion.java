@@ -250,7 +250,9 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
             s.setCosto((double)modelo.getValueAt(row, 3));
             System.out.println("bandera1");
             String estado = (String)jcbEstado.getSelectedItem();
-            LocalDate fecha = LocalDate.parse(jtFecha.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+           
+            LocalDate fecha = LocalDate.parse(jtFecha.getText(), java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            //LocalDate fecha = LocalDate.parse("12/08/2019");
             
             Reparacion re = new Reparacion(a,s,fecha,estado);
             rd.GuardarReparacion(re);
@@ -295,7 +297,8 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
             s.setCosto((double)modelo.getValueAt(row, 3));
             
             String estado = (String)jcbEstado.getSelectedItem();
-            LocalDate fecha = LocalDate.parse(jtFecha.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            //LocalDate fecha = LocalDate.parse(jtFecha.getText());
+            LocalDate fecha = LocalDate.parse(jtFecha.getText(), java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             
             Reparacion re = new Reparacion(id,a,s,fecha,estado);
             rd.actualizarReparacion(re);

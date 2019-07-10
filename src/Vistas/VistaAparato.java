@@ -240,10 +240,10 @@ public class VistaAparato extends javax.swing.JInternalFrame {
                 int id = Integer.parseInt(jtID.getText());
                 String tipo = jtTipo.getText();
                 String nroSerie = jtNroSerie.getText();
-                LocalDate ingreso = LocalDate.parse(jtIngreso.getText(),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                LocalDate egreso = LocalDate.parse(jtEgreso.getText(),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate ingreso = LocalDate.parse(jtIngreso.getText());
+                LocalDate egreso = LocalDate.parse(jtEgreso.getText());
                 Cliente c = (Cliente)jcbCliente.getSelectedItem();
-                Aparato a = new Aparato(id,tipo,nroSerie,c,ingreso,egreso);
+                Aparato a = new Aparato(id,nroSerie,tipo,c,ingreso,egreso);
                 ad.actualizarAparato(a);
                  JOptionPane.showMessageDialog(null,"Se ha actualizado un aparato");
                  limpiarVistaAparato();

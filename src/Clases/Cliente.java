@@ -15,6 +15,8 @@ public class Cliente {
     private String dni;
     private String domicilio;
     private String celular;
+    private int edad;
+    
 
     public String toString() {
         return idCliente + " " + nombre_Cliente; //To change body of generated methods, choose Tools | Templates.
@@ -39,6 +41,23 @@ public class Cliente {
     }
 
     public Cliente() {
+    }
+
+    public Cliente(int idCliente, String nombre_Cliente, String dni, String domicilio, String celular, int edad) {
+        this.idCliente = idCliente;
+        this.nombre_Cliente = nombre_Cliente;
+        this.dni = dni;
+        this.domicilio = domicilio;
+        this.celular = celular;
+        this.edad = edad;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
     
     ///metodos

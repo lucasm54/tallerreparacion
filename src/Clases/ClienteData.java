@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -119,6 +121,9 @@ public class ClienteData {
             ps.setString(2,cliente.getDni());
             ps.setString(3,cliente.getDomicilio());
             ps.setString(4,cliente.getCelular());
+            ps.setInt(5,cliente.getIdCliente());
+            
+                 
             
             
             
@@ -155,5 +160,33 @@ public class ClienteData {
             }
             return c;
         }   
+     
+     public Cliente contarClientes(int edad) {
+         
+       String sql = "select * FROM edad= ?;";
+       
+       
+        try {
+            PreparedStatement ps;
+            ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, edad);
+            
+            
+            ResultSet result = ps.executeQuery();
+            
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+     
+         
+         
+     }
+     
+     
+     
 }
 
