@@ -271,17 +271,23 @@ public class VistaAparato extends javax.swing.JInternalFrame {
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
         try{
-            Aparato aparato = new Aparato();
+            
+            Aparato aparato;
             int id = Integer.parseInt(jtID.getText());
             aparato = ad.buscarAparato(id);
-            jtID.setText(String.valueOf(aparato.getId_aparato()));
-            jtTipo.setText(String.valueOf(aparato.getTipo()));
-            jtNroSerie.setText(String.valueOf(aparato.getNro_serie()));
-            jtIngreso.setText(String.valueOf(aparato.getFechIngreso()));
-            jtEgreso.setText(String.valueOf(aparato.getFechEgreso()));
-            limpiarVistaAparato();
+            if(aparato.getDueño().getNombre_Cliente()!=null){
+                jtID.setText(String.valueOf(aparato.getId_aparato()));
+                jtTipo.setText(String.valueOf(aparato.getTipo()));
+                jtNroSerie.setText(String.valueOf(aparato.getNro_serie()));
+                jtIngreso.setText(String.valueOf(aparato.getFechIngreso()));
+                jtEgreso.setText(String.valueOf(aparato.getFechEgreso()));
+                JOptionPane.showMessageDialog(null,"busqueda exitosa!.");
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"No exite el aparato!.");
+            }
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null,"algosigue mal.");
+            JOptionPane.showMessageDialog(null,"No se ha podido buscar!.");
             limpiarVistaAparato();
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
@@ -292,15 +298,20 @@ public class VistaAparato extends javax.swing.JInternalFrame {
         try{
             String fecha = jtIngreso.getText();
             aparato = ad.buscarAparatoXFecha(fecha);
+            if(aparato.getDueño().getNombre_Cliente()!=null){
             jtID.setText(String.valueOf(aparato.getId_aparato()));
             jtTipo.setText(String.valueOf(aparato.getTipo()));
             jtNroSerie.setText(String.valueOf(aparato.getNro_serie()));
             jtIngreso.setText(String.valueOf(aparato.getFechEgreso()));
             jtEgreso.setText(String.valueOf(aparato.getFechEgreso()));
-            limpiarVistaAparato();
+            JOptionPane.showMessageDialog(null,"Busqueda exitosa!");
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"No existe aparato en esa fecha!");
+            }
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Se ha eliminado");
-        limpiarVistaAparato();
+            JOptionPane.showMessageDialog(null,"Error!");
+            limpiarVistaAparato();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     private void cargarCombo(){

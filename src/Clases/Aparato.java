@@ -30,9 +30,8 @@ public class Aparato {
         this.fechEgreso = fechEgreso;
     }
 
-    @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return id_aparato + " " + tipo; //To change body of generated methods, choose Tools | Templates.
     }
 
     public Aparato(int id_aparato, String nro_serie, String tipo, Cliente dueño, LocalDate fechIngreso, LocalDate fechEgreso) {

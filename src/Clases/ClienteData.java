@@ -151,7 +151,7 @@ public class ClienteData {
                 }
                 ps.close();
             }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null,"Error al buscar un cliente");
+                System.out.println("Error al buscar un cliente");
             }
             return c;
         }   

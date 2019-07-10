@@ -7,14 +7,19 @@ package Clases;
 
 /**
  *
- * @author Emiliano
+ * @author Franco
  */
-class Servicio {
-    
+public class Servicio {
     private int id_servicio;
     private String codigo;
     private String descripcion;
     private double costo;
+
+    public Servicio(String codigo, String descripcion, double costo) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.costo = costo;
+    }
 
     public Servicio(int id_servicio, String codigo, String descripcion, double costo) {
         this.id_servicio = id_servicio;
@@ -23,16 +28,9 @@ class Servicio {
         this.costo = costo;
     }
 
-    public Servicio(String codigo, String descripcion, double costo) {
-        this.codigo = codigo;
-        this.descripcion = descripcion;
-        this.costo = costo;
-    }
-
     public Servicio() {
     }
 
- 
     public int getId_servicio() {
         return id_servicio;
     }
@@ -40,31 +38,29 @@ class Servicio {
     public void setId_servicio(int id_servicio) {
         this.id_servicio = id_servicio;
     }
- 
-    public String getCodigo()
-    {
+
+    public String getCodigo() {
         return codigo;
     }
-    public void setCodigo(String cod)
-    {
-        this.codigo = cod;
 
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
-    public String getDescripcion(){
+
+    public String getDescripcion() {
         return descripcion;
     }
-    public void setDescripcion(String des)
-    {
-        this.descripcion = des;
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
-    public double  getCosto()
-    {
+
+    public double getCosto() {
         return costo;
     }
-    public void setCosto(double cost)
-    {
-        this.costo = cost;
+
+    public void setCosto(double costo) {
+        this.costo = costo;
     }
-
+    
 }
-

@@ -79,6 +79,7 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu24 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
 
         jMenu3.setText("jMenu3");
 
@@ -227,13 +228,21 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenu24.setText("Listados");
 
-        jMenuItem8.setText("Formulario de listados");
+        jMenuItem8.setText("Pendientes-Reparados");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
             }
         });
         jMenu24.add(jMenuItem8);
+
+        jMenuItem9.setText("Aparatos X dueños");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu24.add(jMenuItem9);
 
         jMenuBar8.add(jMenu24);
 
@@ -293,24 +302,38 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-        Escritorio.removeAll();
-        Escritorio.repaint();
-        VistaReparacion vr = new VistaReparacion();
-        vr.setVisible(true);
-        Escritorio.add(vr);
-        Escritorio.moveToFront(vr);
+        try {
+            // TODO add your handling code here:
+            Escritorio.removeAll();
+            Escritorio.repaint();
+            VistaReparacion vr = new VistaReparacion();
+            vr.setVisible(true);
+            Escritorio.add(vr);
+            Escritorio.moveToFront(vr);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
         Escritorio.removeAll();
         Escritorio.repaint();
-        VistaListado vc = new VistaListado();
+        VistaPendienteReparado vc = new VistaPendienteReparado();
         vc.setVisible(true);
         Escritorio.add(vc);
         Escritorio.moveToFront(vc);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        Escritorio.removeAll();
+        Escritorio.repaint();
+        VistaAparatosXDuenio vd = new VistaAparatosXDuenio();
+        vd.setVisible(true);
+        Escritorio.add(vd);
+        Escritorio.moveToFront(vd);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -396,5 +419,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

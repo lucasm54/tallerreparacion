@@ -33,17 +33,18 @@ public class ReparacionData {
         }
     }
     
-    public double costoTotalAparato(int idAparato){
+    public double costoTotalAparato(int idAparato) throws ClassNotFoundException{
         double total=0;
+        
         try{
             String sql = "SELECT id_servicio FROM reparacion WHERE id_aparato = ?;";
+            
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, idAparato);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                ServicioData sd = new ServicioData(conexion);
-                Servicio s = sd.buscarServicio(rs.getInt("id_servicio"));
-                total+=s.getCosto();
+                Servicio s = buscarServicio(rs.getInt("id_servicio"));
+                total=total + s.getCosto();
             }
             ps.close();
         }catch(SQLException ex){
@@ -51,8 +52,11 @@ public class ReparacionData {
         }
         return total;
     }
-    
-    public List<Aparato> listarReparados(){
+    public Servicio buscarServicio(int id) throws ClassNotFoundException{
+            ServicioData sd = new ServicioData(conexion);
+            return sd.buscarServicio(id);
+    }
+    public List<Aparato> listarReparados() throws ClassNotFoundException{
         List<Aparato> aparatos = new ArrayList<Aparato>();
         try{
         String sql = "SELECT id_aparato FROM reparacion WHERE estado=?;";
@@ -64,8 +68,8 @@ public class ReparacionData {
         ResultSet rs = ps.executeQuery();
         Aparato aparato;
         while(rs.next()){
-            AparatoData ad = new AparatoData(conexion);
-            aparato = ad.buscarAparato(rs.getInt("id_aparato"));
+            
+            aparato = buscarAparato(rs.getInt("id_aparato"));
             aparatos.add(aparato);
         }
         ps.close();
@@ -75,7 +79,7 @@ public class ReparacionData {
         return aparatos;
     }
     
-    public List<Aparato> listarPendientes(){
+    public List<Aparato> listarPendientes() throws ClassNotFoundException{
         List<Aparato> aparatos = new ArrayList<Aparato>();
         try{
         String sql = "SELECT id_aparato FROM reparacion WHERE estado=?;";
@@ -87,8 +91,7 @@ public class ReparacionData {
         ResultSet rs = ps.executeQuery();
         Aparato aparato;
         while(rs.next()){
-            AparatoData ad = new AparatoData(conexion);
-            aparato = ad.buscarAparato(rs.getInt("id_aparato"));
+            aparato = buscarAparato(rs.getInt("id_aparato"));
             aparatos.add(aparato);
         }
         ps.close();
@@ -97,20 +100,24 @@ public class ReparacionData {
         }
         return aparatos;
     }
-    
+    public Aparato buscarAparato(int id) throws ClassNotFoundException{
+        AparatoData md=null;
+        md = new AparatoData(conexion);
+        return md.buscarAparato(id);
+    }
     public void GuardarReparacion(Reparacion re)
     {
-      String sql = "INSERT INTO Reparacion(id_reparacion,id_aparato,id_servicio,fechReparacion,estado) VALUES(? ,? ,? ,?);";  
+      String sql = "INSERT INTO reparacion(id_aparato,id_servicio,fechReparacion,estado) VALUES(?,?,?,?);";  
       
         try {
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1,re.getId_Reparacion());
-            ps.setInt(2,re.getAparato().getId_aparato());
-            ps.setInt(3,re.getServicio().getId_servicio());
-            ps.setDate(4,Date.valueOf(re.getFechReparacion()));
-            ps.setString(5,re.getEstado());
+            ps.setInt(1,re.getAparato().getId_aparato());
+            ps.setInt(2,re.getServicio().getId_servicio());
+            ps.setDate(3,Date.valueOf(re.getFechReparacion()));
+            ps.setString(4,re.getEstado());
             
             ps.executeUpdate();
+            
             ResultSet rs = ps.getGeneratedKeys();
             
             if(rs.next())
@@ -133,7 +140,7 @@ public class ReparacionData {
     {
         try
         {
-         String sql = "UPDATE Reparacion SET id_Reparacion =?, id_aparato =? + id_servicio=? "
+         String sql = "UPDATE Reparacion SET id_reparacion =?, id_aparato =? + id_servicio=? "
                  + "fechReparacion=?,estado=?;";
          PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
          ps.setInt(1,re.getId_Reparacion());
@@ -147,7 +154,7 @@ public class ReparacionData {
         }
         catch(SQLException ex)
          {
-           System.out.println("ERROR AL INSERTAR ID"+ex.getMessage());              
+           System.out.println("ERROR AL actualizar "+ex.getMessage());              
          }
         
         }
@@ -163,7 +170,7 @@ public class ReparacionData {
         ps.close();
         }catch(SQLException ex)
         {
-            System.out.println("ERROR AL INSERTAR ID"+ex.getMessage());
+            System.out.println("ERROR AL Eliminar ID"+ex.getMessage());
         }
     }
     

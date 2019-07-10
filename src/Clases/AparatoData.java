@@ -10,8 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -22,10 +25,13 @@ import javax.swing.JOptionPane;
 public class AparatoData {
     private Connection conexion;
     private Conexion con;
+    private ClienteData cd;
+    
     public AparatoData(Conexion con) {
         try{
             this.con = con;
             conexion = con.getConnection();
+            ClienteData cd = new ClienteData(con);
             
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null,"No se encuentra la conexion");
@@ -101,7 +107,7 @@ public class AparatoData {
             System.out.println("Error al actualizar aparato" + ex.getMessage());
         }
     }
-    public Aparato buscarAparato(int id){
+    public Aparato buscarAparato(int id) throws ClassNotFoundException{
         Aparato a = new Aparato();
         try{
             String sql = "SELECT * FROM aparato WHERE id_aparato = ?;";
@@ -113,8 +119,7 @@ public class AparatoData {
                 a.setId_aparato(rs.getInt("id_aparato"));
                 a.setNro_serie(rs.getString("nro_serie"));
                 a.setTipo(rs.getString("tipo"));
-                ClienteData cd = new ClienteData(con);
-                Cliente c = cd.buscarCliente(rs.getInt("id_cliente")); 
+                Cliente c = buscarCliente(rs.getInt("id_cliente")); 
                 a.setDueño(c);
                 a.setFechIngreso(rs.getDate("fechIngreso").toLocalDate());
                 a.setFechEgreso(rs.getDate("fechEgreso").toLocalDate());
@@ -127,7 +132,7 @@ public class AparatoData {
         return a;
     }
     
-    public Aparato buscarAparatoXFecha(String fecha){
+    public Aparato buscarAparatoXFecha(String fecha) throws ClassNotFoundException{
         Aparato a = null;
         try{
             String sql = "SELECT * FROM aparato WHERE fechIngreso = ?;";
@@ -135,13 +140,12 @@ public class AparatoData {
             ps.setDate(1,Date.valueOf(fecha));
             ResultSet rs = ps.executeQuery();
             
-            if(rs.next()){
+            while(rs.next()){
                 a = new Aparato();
                 a.setId_aparato(rs.getInt("id_aparato"));
                 a.setNro_serie(rs.getString("nro_serie"));
                 a.setTipo(rs.getString("tipo"));
-                ClienteData cd = new ClienteData();
-                Cliente c = cd.buscarCliente(rs.getInt("id_cliente")); 
+                Cliente c = buscarCliente(rs.getInt("id_cliente")); 
                 a.setDueño(c);
                 a.setFechIngreso(rs.getDate("fechIngreso").toLocalDate());
                 a.setFechEgreso(rs.getDate("fechEgreso").toLocalDate());
@@ -149,11 +153,11 @@ public class AparatoData {
             }
             ps.close();
         }catch(SQLException ex){
-            
+            System.out.println("No se encontro la fecha");
         }
         return a;
     }
-    public List<Aparato> mostrarAparatosXduenio(int idDuenio){
+    public List<Aparato> mostrarAparatosXduenio(int idDuenio) throws ClassNotFoundException{
         
         List<Aparato> aparatos = new ArrayList<Aparato>();
         
@@ -172,8 +176,8 @@ public class AparatoData {
                 aparato.setTipo(rs.getString("tipo"));
                 aparato.setFechIngreso(rs.getDate("fechIngreso").toLocalDate());
                 aparato.setFechEgreso(rs.getDate("fechEgreso").toLocalDate());
-                ClienteData cd = new ClienteData(con);
-                Cliente c = cd.buscarCliente(rs.getInt("id_cliente"));
+                
+                Cliente c = buscarCliente(rs.getInt("id_cliente"));
                 
                 aparato.setDueño(c);
                 
@@ -185,6 +189,44 @@ public class AparatoData {
         }
         return aparatos;
     }
+     public List<Aparato> listarAparatos() throws ClassNotFoundException{
+        List<Aparato> lista = new ArrayList<Aparato>();
+        try{
+            String sql = "SELECT * FROM Aparato;";
+            
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            
+            ResultSet result = ps.executeQuery();
+            
+            Aparato a;            
+            while(result.next()){
+                a = new Aparato();
+                
+                a.setId_aparato(result.getInt("id_aparato"));
+                a.setNro_serie(result.getString("nro_serie"));
+                a.setTipo(result.getString("tipo"));
+                
+                Cliente c = buscarCliente(result.getInt("id_cliente"));
+                a.setDueño(c);
+                
+                a.setFechEgreso(result.getDate("fechEgreso").toLocalDate());
+                a.setFechIngreso(result.getDate("fechIngreso").toLocalDate());
+                lista.add(a);
+                
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al querer mostrar aparatos " + ex.getMessage());
+        }
+        
+        return lista; 
+    }
+    public Cliente buscarCliente(int id) throws ClassNotFoundException{
+        ClienteData md=null;
+        md = new ClienteData(con);
+        return md.buscarCliente(id);
+    }
+    
 }
     
     

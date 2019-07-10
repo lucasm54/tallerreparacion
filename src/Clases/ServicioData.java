@@ -20,55 +20,54 @@ import javax.swing.JOptionPane;
  */
 public class ServicioData {
     
-    private Connection con;
-    
-    public ServicioData(Conexion conexion)
+    private Connection conexion;
+    private Conexion con;
+    public ServicioData(Conexion con)
     {
         try
         {
-            con = conexion.getConnection();
-        
+            conexion = con.getConnection();
+            
         }
         catch(SQLException ex)
         {
             System.out.println("ERROR AL CONECTAR"+ex.getMessage());
         }
     }
-//    public List<Servicio> listarServicios(){
-//        List<Servicio> lista = new ArrayList<Servicio>();
-//        try{
-//            String sql = "SELECT * FROM cliente;";
-//            
-//            PreparedStatement ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-//            
-//            ResultSet result = ps.executeQuery();
-//            
-//            Cliente cliente;
-//            
-//            while(result.next()){
-//                cliente = new Cliente();
-//                cliente.setIdCliente(result.getInt("id_cliente"));
-//                cliente.setNombreCliente(result.getString("nombre_cliente"));
-//                cliente.setDni(result.getString("dni"));
-//                cliente.setDomicilio(result.getString("domicilio"));
-//                cliente.setCelular(result.getString("celular"));
-//                lista.add(cliente);
-//                
-//            }
-//            ps.close();
-//        } catch (SQLException ex) {
-//            System.out.println("Error al querer mostrar clientes " + ex.getMessage());
-//        }
-//        
-//        return lista; 
-//    }
+    public List<Servicio> listarServicios(){
+        List<Servicio> lista = new ArrayList<Servicio>();
+        try{
+            String sql = "SELECT * FROM servicio;";
+            
+            PreparedStatement ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            
+            ResultSet result = ps.executeQuery();
+            
+            Cliente cliente;
+            
+            while(result.next()){
+                Servicio s = new Servicio();
+                s.setId_servicio(result.getInt("id_servicio"));
+                s.setCodigo(result.getString("codigo"));
+                s.setDescripcion(result.getString("descripcion"));
+                s.setCosto(result.getDouble("costo"));
+                lista.add(s);
+                
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al querer mostrar Servicios " + ex.getMessage());
+        }
+        
+        return lista; 
+    }
     public void guardarServicio(Servicio se)
     {
         
         try {
             String sql = "INSERT INTO Servicio (codigo,descripcion,costo) VALUES ( ? , ? , ? );";
 
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,se.getCodigo());
             ps.setString(2,se.getDescripcion());
             ps.setDouble(3,se.getCosto());
@@ -87,7 +86,7 @@ public class ServicioData {
             ps.close();
     
         } catch (SQLException ex) {
-            System.out.println("Error al insertar Cursada " + ex.getMessage());
+            System.out.println("Error al insertar Servicio " + ex.getMessage());
         }
     }
     public void actualizarServicio(Servicio servicio)
@@ -95,7 +94,7 @@ public class ServicioData {
         try
         {
             String sql = "UPDATE servicio SET codigo = ? , descripcion = ? , costo = ? WHERE id_servicio = ?";
-            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,servicio.getCodigo());
             ps.setString(2,servicio.getDescripcion());
             ps.setDouble(3,servicio.getCosto());
@@ -113,30 +112,29 @@ public class ServicioData {
         try
         {
             String sql = "DELETE FROM servicio WHERE id_servicio = ?";
-            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,id);
             ps.executeUpdate();
             ps.close();
         }catch(SQLException ex)
         {
-            System.out.print("ERROR AL INSERTAR CODIGO"+ex.getMessage());
+            System.out.print("ERROR AL borrar"+ex.getMessage());
         }
     }
-    //AGREGE EL BUSCAR SERVICIO TAMBIEN
     public Servicio buscarServicio(int id){
-            Servicio s = null;
+            Servicio s  = new Servicio();
             try{
                 String sql = "SELECT * FROM servicio WHERE id_servicio = ?;";
                 PreparedStatement ps;
-                ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+                ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
                 
                 ps.setInt(1, id);
                 
                 ResultSet rs = ps.executeQuery();
                 
                 
-                if(rs.next()){
-                    s = new Servicio();
+                while(rs.next()){
+                    
                     s.setId_servicio(rs.getInt(rs.getInt("id_servicio")));
                     s.setCodigo(rs.getString("codigo"));
                     s.setDescripcion(rs.getString("descripcion"));

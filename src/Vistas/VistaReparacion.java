@@ -5,8 +5,14 @@
  */
 package Vistas;
 import Clases.*;
-import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,19 +23,57 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
      private DefaultTableModel modelo;
      private ServicioData sd;
      private AparatoData ad;
+     private ReparacionData rd;
      private Conexion con;
-     
+     private List<Servicio> listaServicio;
+     private List<Aparato> listaAparato;
     /**
      * Creates new form VistaReparacion
      */
     public VistaReparacion() throws ClassNotFoundException {
         initComponents();
-        con = new Conexion();
+        con = new Conexion("jdbc:mysql://localhost/tallerreparacion","root","");
         sd = new ServicioData(con);
         ad = new AparatoData(con);
+        rd = new ReparacionData(con);
+        listaServicio = sd.listarServicios();
+        listaAparato = ad.listarAparatos();
         modelo = new DefaultTableModel();
+        cargarCombo();
+        armarCabecera();
+        cargarTable();
     }
-
+    private void borrarFilas(){
+        int cant = modelo.getRowCount()-1;
+        for(int i = cant ; i>=0;i--){
+            modelo.removeRow(i);
+        }
+    }
+    private void cargarCombo() throws ClassNotFoundException{
+        listaAparato = ad.listarAparatos();
+            
+        for(Aparato a: listaAparato)
+            jcbAparato.addItem(a);
+    }
+    private void armarCabecera(){
+        ArrayList<Object> columnas = new ArrayList<Object>();
+        columnas.add("ID");
+        columnas.add("Codigo");
+        columnas.add("Descripcion");
+        columnas.add("Costo");
+        for(Object it:columnas)
+        {
+            modelo.addColumn(it);
+        }
+        jtblServicio.setModel(modelo);
+    }
+    private void cargarTable() throws ClassNotFoundException{
+        borrarFilas();
+        listaServicio = sd.listarServicios();
+        for(Servicio s:listaServicio){
+            modelo.addRow(new Object[]{s.getId_servicio(),s.getCodigo(),s.getDescripcion(),s.getCosto()});
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,8 +84,6 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtblAparato = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtblServicio = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -49,25 +91,16 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jtFecha = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jbGuardar = new javax.swing.JButton();
         jbEliminar = new javax.swing.JButton();
         jbModificar = new javax.swing.JButton();
         jbLimpiar = new javax.swing.JButton();
+        jcbAparato = new javax.swing.JComboBox<>();
 
         jLabel1.setText("ID");
-
-        jtblAparato.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
-            }
-        ));
-        jScrollPane1.setViewportView(jtblAparato);
 
         jtblServicio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,6 +113,8 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jtblServicio);
 
         jLabel2.setText("Estado");
+
+        jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Resuelto" }));
 
         jLabel3.setText("Fecha de reparacion");
 
@@ -98,10 +133,31 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
         });
 
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbModificar.setText("Modificar");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
+            }
+        });
 
         jbLimpiar.setText("Limpiar");
+        jbLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimpiarActionPerformed(evt);
+            }
+        });
+
+        jcbAparato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbAparatoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,41 +167,42 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel5)
-                        .addGap(364, 364, 364)
-                        .addComponent(jLabel6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(363, 363, 363)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53)
-                                .addComponent(jbGuardar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbEliminar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbModificar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbLimpiar)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jbGuardar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbEliminar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbModificar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbLimpiar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(44, 44, 44)
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jtID, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jcbAparato, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,25 +212,26 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(jcbAparato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel6)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbGuardar)
-                        .addComponent(jbEliminar)
-                        .addComponent(jbModificar)
-                        .addComponent(jbLimpiar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbGuardar)
+                    .addComponent(jbEliminar)
+                    .addComponent(jbModificar)
+                    .addComponent(jbLimpiar))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -181,7 +239,75 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Aparato a = (Aparato)jcbAparato.getSelectedItem();
+            Servicio s = new Servicio();
+            int row = jtblServicio.getSelectedRow();
+            s.setId_servicio((Integer)modelo.getValueAt(row, 0));
+            s.setCodigo((String)modelo.getValueAt(row, 1));
+            s.setDescripcion((String)modelo.getValueAt(row, 2));
+            s.setCosto((double)modelo.getValueAt(row, 3));
+            System.out.println("bandera1");
+            String estado = (String)jcbEstado.getSelectedItem();
+            LocalDate fecha = LocalDate.parse(jtFecha.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            
+            Reparacion re = new Reparacion(a,s,fecha,estado);
+            rd.GuardarReparacion(re);
+            System.out.println("bandera2");
+            JOptionPane.showMessageDialog(null, "Se ha guardado correctamente");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null,"Error!. NO se ha guardado");
+        }
     }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jcbAparatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAparatoActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            cargarTable();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(VistaReparacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jcbAparatoActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        try{
+            int id = Integer.parseInt(jtID.getText());
+            rd.borrarReparacion(id);
+            JOptionPane.showMessageDialog(null, "Se ha eliminado");}
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "No se ha podido eliminar");
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        // TODO add your handling code here:
+        if(jtID.getText()!=null){
+            int id = Integer.parseInt(jtID.getText());
+            Aparato a = (Aparato)jcbAparato.getSelectedItem();
+            Servicio s = new Servicio();
+            int row = jtblServicio.getSelectedRow();
+            s.setId_servicio((Integer)modelo.getValueAt(row, 0));
+            s.setCodigo((String)modelo.getValueAt(row, 1));
+            s.setDescripcion((String)modelo.getValueAt(row, 2));
+            s.setCosto((double)modelo.getValueAt(row, 3));
+            
+            String estado = (String)jcbEstado.getSelectedItem();
+            LocalDate fecha = LocalDate.parse(jtFecha.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            
+            Reparacion re = new Reparacion(id,a,s,fecha,estado);
+            rd.actualizarReparacion(re);
+            JOptionPane.showMessageDialog(this, "Se ha actualizado");
+        }
+    }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void jbLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimpiarActionPerformed
+        // TODO add your handling code here:
+        jtFecha.setText("");
+        jtID.setText("");
+    }//GEN-LAST:event_jbLimpiarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -191,16 +317,15 @@ public class VistaReparacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbLimpiar;
     private javax.swing.JButton jbModificar;
+    private javax.swing.JComboBox<Aparato> jcbAparato;
     private javax.swing.JComboBox<String> jcbEstado;
     private javax.swing.JTextField jtFecha;
-    private javax.swing.JTable jtblAparato;
+    private javax.swing.JTextField jtID;
     private javax.swing.JTable jtblServicio;
     // End of variables declaration//GEN-END:variables
 }
