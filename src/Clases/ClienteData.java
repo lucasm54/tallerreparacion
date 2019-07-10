@@ -161,25 +161,29 @@ public class ClienteData {
             return c;
         }   
      
-     public Cliente contarClientes(int edad) {
+     public int contarClientes(int edad) {
          
-       String sql = "select * FROM edad= ?;";
+       String sql = "select count(*) FROM cliente where edad= ?;";
        
-       
+        int cant = 0;
         try {
             PreparedStatement ps;
             ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, edad);
-            
+                    
             
             ResultSet result = ps.executeQuery();
             
-            
+            if(result.next()){
+                cant = result.getInt(1);
+            }
+            return cant;
             
             
         } catch (SQLException ex) {
             Logger.getLogger(ClienteData.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return cant;
             
      
          
