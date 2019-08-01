@@ -38,7 +38,7 @@ public class ClienteData {
     
     public void guardarCliente (Cliente cliente){
         try {
-            String sql = "INSERT INTO cliente(nombre_cliente , dni , domicilio , celular) VALUES(? ,? ,? ,?);";
+            String sql = "INSERT INTO cliente(nombre_cliente , dni , domicilio , celular, edad) VALUES(? ,? ,? ,?, ?);";
             PreparedStatement ps;
             ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             
@@ -46,6 +46,7 @@ public class ClienteData {
             ps.setString(2, cliente.getDni());
             ps.setString(3, cliente.getDomicilio());
             ps.setString(4, cliente.getCelular());
+            ps.setInt(5, cliente.getEdad());
             
             
             ps.executeUpdate();
@@ -162,9 +163,10 @@ public class ClienteData {
         }   
      
      public int contarClientes(int edad) {
-         
+        //creo consulta 
        String sql = "select count(*) FROM cliente where edad= ?;";
        
+        //variable a retornar
         int cant = 0;
         try {
             PreparedStatement ps;
