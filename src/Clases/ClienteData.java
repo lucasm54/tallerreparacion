@@ -113,7 +113,7 @@ public class ClienteData {
     }
     public void actualizarCliente(Cliente cliente){
         try{
-            String sql = "UPDATE cliente SET nombre_cliente = ?, dni= ? , domicilio = ? ,celular = ? WHERE id_cliente = ?;";
+            String sql = "UPDATE cliente SET nombre_cliente = ?, dni= ? , domicilio = ? ,celular = ? WHERE id_cliente = ? ;";
             
             PreparedStatement ps;
             ps = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);

@@ -64,6 +64,7 @@ public class VistaAparato extends javax.swing.JInternalFrame {
         jbModificar = new javax.swing.JButton();
         jbBuscar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLimpiar = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -122,50 +123,60 @@ public class VistaAparato extends javax.swing.JInternalFrame {
             }
         });
 
+        jLimpiar.setText("Limpiar");
+        jLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(92, 92, 92)
-                                .addComponent(jbModificar))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jbGuardar)
-                                .addGap(114, 114, 114)))
-                        .addComponent(jbEliminar))
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtNroSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtID, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbBuscar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jcbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtEgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addContainerGap()
+                        .addComponent(jbGuardar)
                         .addGap(18, 18, 18)
-                        .addComponent(jtNroSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtID, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbBuscar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
+                        .addComponent(jbModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jcbCliente, 0, 128, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtEgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
+                        .addComponent(jbEliminar)
+                        .addGap(14, 14, 14)
+                        .addComponent(jLimpiar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -199,8 +210,9 @@ public class VistaAparato extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbGuardar)
                     .addComponent(jbEliminar)
-                    .addComponent(jbModificar))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(jbModificar)
+                    .addComponent(jLimpiar))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -281,6 +293,7 @@ public class VistaAparato extends javax.swing.JInternalFrame {
                 jtNroSerie.setText(String.valueOf(aparato.getNro_serie()));
                 jtIngreso.setText(String.valueOf(aparato.getFechIngreso()));
                 jtEgreso.setText(String.valueOf(aparato.getFechEgreso()));
+                jcbCliente.setSelectedItem(String.valueOf(aparato.getDueño()));
                 JOptionPane.showMessageDialog(null,"busqueda exitosa!.");
             }
             else{
@@ -302,7 +315,7 @@ public class VistaAparato extends javax.swing.JInternalFrame {
             jtID.setText(String.valueOf(aparato.getId_aparato()));
             jtTipo.setText(String.valueOf(aparato.getTipo()));
             jtNroSerie.setText(String.valueOf(aparato.getNro_serie()));
-            jtIngreso.setText(String.valueOf(aparato.getFechEgreso()));
+            jtIngreso.setText(String.valueOf(aparato.getFechIngreso()));
             jtEgreso.setText(String.valueOf(aparato.getFechEgreso()));
             JOptionPane.showMessageDialog(null,"Busqueda exitosa!");
             }
@@ -325,6 +338,17 @@ public class VistaAparato extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jcbClienteActionPerformed
 
+    private void jLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLimpiarActionPerformed
+        jtID.setText("");
+        jtTipo.setText("");
+        jtNroSerie.setText("");
+        jtIngreso.setText("");
+        jtEgreso.setText("");
+        jcbCliente.setSelectedIndex(-1);
+        
+                // TODO add your handling code here:
+    }//GEN-LAST:event_jLimpiarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -334,6 +358,7 @@ public class VistaAparato extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton jLimpiar;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
