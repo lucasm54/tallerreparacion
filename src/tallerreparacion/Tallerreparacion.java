@@ -8,7 +8,11 @@ package tallerreparacion;
 import Clases.Cliente;
 import Clases.ClienteData;
 import Clases.Conexion;
+import Clases.Historial;
+import Clases.HistorialData;
+import Clases.Servicio;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,34 +37,30 @@ public class Tallerreparacion {
             
             //a) ESTABLECER LA CONEXION---------
             Conexion con = new Conexion();
-            try {
-                con.getConnection();
-            } catch (SQLException ex) {
-                Logger.getLogger(Tallerreparacion.class.getName()).log(Level.SEVERE, null, ex);
-            }
             
-            //b)Instanciar dos clientes, de 30 y 40 años
+            //b)Instanciar historial
+            Historial h1 = new Historial (2,"respaldo de datos", "Nino Romero",60);
+           
             
-            Cliente c1 = new Cliente(6, "julian", "23234324", "barrio policial", "682429", 30);
-            Cliente c2 = new Cliente(7, "mauricio", "32435454","barrio ate","453535", 40);
+            //c) Guardar en la bd el historial
             
-            //c) Guardar en la bd los clientes creados
+            HistorialData hd = new HistorialData(con);
+           hd.guardarHistorial(h1);
             
-            ClienteData cd = new ClienteData(con);
-            cd.guardarCliente(c1);
-            cd.guardarCliente(c2);
-            
-            //informar cantiad cliente con 30 años
-            int cant = 0;
-            cant = cd.contarClientes(30);
-            System.out.println("cantidad clientes 30 años: " + cant);
-            
-            
-            
+           //listar
+           
+           List<Historial> lista = hd.obtenerHistorial();
+           
+        //for ( Historial h:obtenerHistorial)       { 
+        
+                   
+                
+        
+           
             
         } catch (ClassNotFoundException ex) {
             System.out.println("Error :"+ex.getMessage());
         }
-    }
     
+    }
 }
